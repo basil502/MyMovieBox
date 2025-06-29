@@ -6,6 +6,8 @@ import com.example.MyMovieBox.Entity.MovieEntity;
 import com.example.MyMovieBox.Entity.UserEntity;
 import com.example.MyMovieBox.Service.MovieService;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,11 +51,21 @@ public class MovieController {
         return ResponseEntity.ok("Movie deleted successfully");
     }
 
+    @GetMapping("/getAllMovies")
+        public List<MovieEntity> getAllMovies() {
+            return movieService.getAllMovies();
+        }
+    
+
     @GetMapping("/getMovie/{id}")
     public ResponseEntity<MovieEntity> getMovie(@PathVariable Long id) {
         MovieEntity movie = movieService.getMovieById(id);
         return ResponseEntity.ok(movie);
-        }
-    
+    }
 
+    @GetMapping("/getcompletedMovies")
+    public ResponseEntity<List<MovieEntity>> getCompletedMovies() {
+        return movieService.getCompletedMovies();
+    }
+    
 }

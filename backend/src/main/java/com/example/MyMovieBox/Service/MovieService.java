@@ -1,5 +1,7 @@
 package com.example.MyMovieBox.Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -55,10 +57,25 @@ public ResponseEntity<String> addMovie(MovieEntity movie, Long userId) {
     
     return ResponseEntity.ok("Movie updated successfully");
 }
-    
+
+public List<MovieEntity> getAllMovies() {
+    return movieRepository.findAll();
+}
+
+public ResponseEntity<List<MovieEntity>> getCompletedMovies() {
+    List<MovieEntity> movies = movieRepository.findAllByStatus("completed");
+
+    if (movies.isEmpty()) {
+        throw new RuntimeException("No movies found with status: completed");
+    }
+
+    return ResponseEntity.ok(movies);
+}
+
     public void deleteMovie(Long id) {
         movieRepository.deleteById(id);
     }
+
 
 
 
